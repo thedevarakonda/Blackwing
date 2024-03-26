@@ -1,9 +1,16 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
-
+import ImagesScreen from './droneimages';
 import { format } from 'date-fns';
+import { useNavigation } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+const Stack = createNativeStackNavigator();
 
 const HomeScreen = () => {
+
+  const navigation = useNavigation();
+
   const [data, setData] = useState([
     { date: '2024-03-20', count: 10 },
     { date: '2024-03-21', count: 15 },
@@ -24,6 +31,7 @@ const HomeScreen = () => {
 
   const handleItemClick = (item) => {
     console.log('Item clicked:', item);
+    navigation.navigate('Images', { selectedDate: item.date });
   };
 
   const renderItem = ({ item }) => (
@@ -85,4 +93,14 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen;
+
+const Home = () =>{
+  return(
+    <Stack.Navigator>
+      <Stack.Screen name="Feed" component={HomeScreen} options={{headerTitle:'Home'}} />
+      <Stack.Screen name="Images" component={ImagesScreen} />
+    </Stack.Navigator>
+  )
+}
+
+export default Home;
