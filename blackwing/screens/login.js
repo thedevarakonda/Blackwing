@@ -9,7 +9,6 @@ const LoginScreen = () => {
   navigation = useNavigation();
 
   const handleLogin = () => {
-    // Perform login logic here
     console.log('Logging in with:', email, password);
     if(email=='abc'){
         console.log("Logged IN")
@@ -33,7 +32,7 @@ const LoginScreen = () => {
       <View style={styles.logoContainer}>
 
         <Image
-          source={require('../logo.png')} // Provide the path to your drone image
+          source={require('../logo.png')} 
           style={styles.logo}
           resizeMode="contain"
         />
@@ -70,8 +69,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'flex-start', // Align content at the top
-    paddingTop: 50, // Add more top padding
+    justifyContent: 'flex-start', 
+    paddingTop: 50, 
     paddingHorizontal: 20,
     backgroundColor: 'white'
   },
@@ -81,7 +80,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   logo: {
-    width: 250, // Adjust the size of the image as needed
+    width: 250, 
     height: 250,
     marginRight: 10,
   },
@@ -105,7 +104,7 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
   },
   loginButton: {
-    backgroundColor: '#007bff',
+    backgroundColor: 'blue',
     paddingVertical: 12,
     paddingHorizontal: 40,
     borderRadius: 5,

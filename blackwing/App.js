@@ -7,7 +7,6 @@ import AnalyticsScreen from './screens/analytics';
 import MapScreen from './screens/map';
 import ProfileScreen from './screens/profile';
 import Login from './screens/login';
-import Toolbar from './screens/toolbar';
 import {MaterialIcons} from '@expo/vector-icons';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -29,7 +28,6 @@ const MainScreen = () => {
             iconName = focused ? 'person' : 'person';
           }
 
-          // You can return any component that you like here!
           return <MaterialIcons name={iconName} size={size} color={color} />;
         },
       })}

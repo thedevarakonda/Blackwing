@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import Toolbar from './toolbar'; // Assuming you have the Toolbar component in a separate file
 
 const ProfileScreen = () => {
   return (
@@ -9,7 +8,6 @@ const ProfileScreen = () => {
       <View style={styles.content}>
         <Text>Welcome to the Profile Screen !</Text>
       </View>
-      {/* <Toolbar activeScreen="profile"/> */}
     </View>
   );
 };
