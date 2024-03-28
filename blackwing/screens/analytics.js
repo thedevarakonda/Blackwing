@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-// import {BarChart} from 'react-native-gifted-charts';
+import {BarChart} from 'react-native-chart-kit';
 
 const AnalyticsScreen = () => {
   const [count, setCount] = useState([
