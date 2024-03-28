@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import {BarChart} from 'react-native-gifted-charts';
+// import {BarChart} from 'react-native-gifted-charts';
 
 const AnalyticsScreen = () => {
   const [count, setCount] = useState([
@@ -16,7 +16,7 @@ const AnalyticsScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        <BarChart 
+        {/* <BarChart 
           data={count}
           barWidth={30}
           noOfSections={5}
@@ -24,7 +24,7 @@ const AnalyticsScreen = () => {
           frontColor="#FF9800"
           yAxisThickness={5}
           xAxisThickness={5}
-        />
+        /> */}
       </View>
     </View>
   );
