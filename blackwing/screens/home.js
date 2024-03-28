@@ -4,8 +4,19 @@ import ImagesScreen from './droneimages';
 import { format } from 'date-fns';
 import { useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 const Stack = createNativeStackNavigator();
+
+const Home = () =>{
+  return(
+    <Stack.Navigator>
+      <Stack.Screen name="Feed" component={HomeScreen} options={{headerTitle:'Home'}} />
+      <Stack.Screen name="Images" component={ImagesScreen} />
+    </Stack.Navigator>
+  )
+}
+
 
 const HomeScreen = () => {
 
@@ -15,24 +26,21 @@ const HomeScreen = () => {
     { date: '2024-03-20', count: 10 },
     { date: '2024-03-21', count: 15 },
     { date: '2024-03-22', count: 20 },
-    { date: '2024-03-20', count: 10 },
-    { date: '2024-03-21', count: 15 },
-    { date: '2024-03-22', count: 20 },
-    { date: '2024-03-20', count: 10 },
-    { date: '2024-03-21', count: 15 },
-    { date: '2024-03-22', count: 20 },
-    { date: '2024-03-20', count: 10 },
-    { date: '2024-03-21', count: 15 },
-    { date: '2024-03-22', count: 20 },
-    { date: '2024-03-20', count: 10 },
-    { date: '2024-03-21', count: 15 },
-    { date: '2024-03-22', count: 20 },
+    { date: '2024-03-23', count: 10 },
+    { date: '2024-03-24', count: 15 },
+    { date: '2024-03-25', count: 20 },
+    { date: '2024-03-26', count: 10 },
+    { date: '2024-03-27', count: 15 },
+    { date: '2024-03-28', count: 20 },
+    { date: '2024-03-29', count: 10 },
+    { date: '2024-03-30', count: 15 },
   ]);
 
   const handleItemClick = (item) => {
     console.log('Item clicked:', item);
     navigation.navigate('Images', { selectedDate: item.date });
   };
+
 
   const renderItem = ({ item }) => (
     <TouchableOpacity onPress={() => handleItemClick(item)} style={styles.item}>
@@ -46,12 +54,14 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
+
       <FlatList
         data={data}
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}
         contentContainerStyle={styles.content}
       />
+
     </View>
   );
 };
@@ -91,16 +101,20 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#000',
   },
+  filterButton: {
+    alignSelf: 'flex-start',
+    padding: 10,
+    backgroundColor: 'black',
+    borderRadius: 5,
+    marginBottom: 10,
+  },
+  filterButtonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold'
+  },
 });
 
 
-const Home = () =>{
-  return(
-    <Stack.Navigator>
-      <Stack.Screen name="Feed" component={HomeScreen} options={{headerTitle:'Home'}} />
-      <Stack.Screen name="Images" component={ImagesScreen} />
-    </Stack.Navigator>
-  )
-}
 
 export default Home;
