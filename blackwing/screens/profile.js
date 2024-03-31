@@ -23,7 +23,7 @@ const ProfileScreen = () => {
   
   return (
     <View style={styles.container}>
-      <Image source={require('../assets/icon.png')} style={styles.image} />
+      <Image source={require('../assets/image.png')} style={styles.image} />
       <Text
         style={styles.username}
       >Username</Text>
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     marginBottom:60
   },
   button: {
-    width: '80%',
+    width: '60%',
     height: 40,
     backgroundColor: 'lightblue',
     justifyContent: 'center',
