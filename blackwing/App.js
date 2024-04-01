@@ -31,11 +31,16 @@ const MainScreen = () => {
 
           return <MaterialIcons name={iconName} size={size} color={color} />;
         },
+      "tabBarActiveTintColor": "black",
+      "tabBarInactiveTintColor": "gray",
+      "tabBarStyle": [
+        {
+          "display": "flex"
+        },
+        null
+      ]
       })}
-      tabBarOptions={{
-        activeTintColor: 'black',
-        inactiveTintColor: 'gray',
-      }}
+      
     >
       <Tab.Screen name="Home" component={Home} options={{headerShown:false}}/>
       <Tab.Screen name="Analytics" component={AnalyticsScreen}  />

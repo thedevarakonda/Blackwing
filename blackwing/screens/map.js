@@ -1,43 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, TouchableOpacity, Text, Alert } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import DateTimePicker from '@react-native-community/datetimepicker';
-
+import axios from 'axios';
 const MapScreen = () => {
   const [showDate, setShowDate] = useState(false);
   const [date, setDate] = useState(new Date());
-  const [location, setLocation] = useState([
-    {
-      date: new Date(2024, 2, 20), 
-      latitude: 25,
-      longitude: 41,
-    },
-    {
-      date: new Date(2024, 2, 21), 
-      latitude: 26,
-      longitude: 42,
-    },
-    {
-      date: new Date(2024, 2, 22), 
-      latitude: 27,
-      longitude: 43,
-    },
-    {
-      date: new Date(2024, 2, 23), 
-      latitude: 28,
-      longitude: 44,
-    },
-    {
-      date: new Date(2024, 2, 24), 
-      latitude: 29,
-      longitude: 46,
-    },
-    {
-      date: new Date(2024, 2, 24), 
-      latitude: 29,
-      longitude: 48,
-    },
-  ]);
+  const [location, setLocation] = useState([]);
+
+  useEffect(()=>{
+
+    axios('http://10.0.2.2:5000/fetch_map')
+    .then((response)=>{
+      console.log(response.data)
+      setLocation(response.data)
+    })
+    .catch((error)=>{
+      console.log("Error: ",error)
+    })
+  },[])
   
   const openDatePicker = () => {
     setShowDate(true);
@@ -48,7 +29,7 @@ const MapScreen = () => {
     setShowDate(false);
     setDate(currentDate);
 
-    const dronesAvailable = location.some(item => currentDate.toDateString() === item.date.toDateString());
+    const dronesAvailable = location.some(item => currentDate.toDateString() === new Date(item.date).toDateString());
     console.log(dronesAvailable)
 
     if (!dronesAvailable) {
@@ -79,7 +60,7 @@ const MapScreen = () => {
           
           location.map((item,index)=>{
 
-            if(date.toDateString() == item.date.toDateString()){
+            if(date.toDateString() == new Date(item.date).toDateString()){
               return(
                 <Marker 
                   key={index}

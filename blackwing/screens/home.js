@@ -4,7 +4,8 @@ import ImagesScreen from './droneimages';
 import { format } from 'date-fns';
 import { useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import axios from 'axios';
+import { useEffect } from 'react'
 
 const Stack = createNativeStackNavigator();
 
@@ -22,19 +23,17 @@ const HomeScreen = () => {
 
   const navigation = useNavigation();
 
-  const [data, setData] = useState([
-    { date: '2024-03-20', count: 10 },
-    { date: '2024-03-21', count: 15 },
-    { date: '2024-03-22', count: 20 },
-    { date: '2024-03-23', count: 10 },
-    { date: '2024-03-24', count: 15 },
-    { date: '2024-03-25', count: 20 },
-    { date: '2024-03-26', count: 10 },
-    { date: '2024-03-27', count: 15 },
-    { date: '2024-03-28', count: 20 },
-    { date: '2024-03-29', count: 10 },
-    { date: '2024-03-30', count: 15 },
-  ]);
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    
+    axios('http://10.0.2.2:5000/fetch_data')
+    .then((response) => {
+      console.log(response.data)
+      setData(response.data)})
+      .catch((error) => {console.log("Error:",error)});
+  },[])
+  
 
   const handleItemClick = (item) => {
     console.log('Item clicked:', item);
