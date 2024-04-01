@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import axios from 'axios';
 import { useEffect } from 'react';
+import { ActivityIndicator } from 'react-native'
 
 const Stack = createNativeStackNavigator();
 
@@ -13,18 +14,21 @@ const HomeScreen = () => {
 
   const navigation = useNavigation();
 
+  const [loading, setLoading] = useState(true);
   const [data, setData] = useState([
-    { date: '2024-03-20', count: 10 },
+    { date: '2024-03-28', count: 10 },
     { date: '2024-03-21', count: 15 },
     { date: '2024-03-22', count: 20 },
   ]);
 
   useEffect(() => {
     
-    axios('http://10.0.2.2:5000/fetch_data')
+    axios('http://10.0.2.2:8000/fetch_data')
     .then((response) => {
-      console.log(response.data)
-      setData(response.data)})
+      console.log(response.data);
+      setData(response.data)
+      setLoading(false)
+    })
       .catch((error) => {console.log(error)});
   },[])
   
@@ -43,7 +47,14 @@ const HomeScreen = () => {
       </View>
     </TouchableOpacity>
   );
-
+  
+  if(loading)
+  {
+    return <View style={styles.loadcontainer}>
+      <ActivityIndicator size={"large"}/>
+      <Text>Loading</Text>
+    </View>
+  }
   return (
     <View style={styles.container}>
       <FlatList
@@ -62,6 +73,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     paddingHorizontal: 20,
     paddingTop: 20,
+  },
+  loadcontainer: {
+    flex: 1,
+    backgroundColor: '#fff',
+    paddingHorizontal: 20,
+    paddingTop: 20,
+    justifyContent:'center',
+    alignItems:'center',
   },
   content: {
     flexGrow: 1,
