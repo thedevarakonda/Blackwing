@@ -1,8 +1,5 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity, Modal, TouchableWithoutFeedback } from 'react-native';
-import axios from 'axios';
-import { useEffect } from 'react';
 import Card from '../components/Card';
 import { ActivityIndicator } from 'react-native';
 

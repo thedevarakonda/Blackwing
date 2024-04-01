@@ -87,6 +87,10 @@ async def fetch_image(data : Datecls):
             temp['id']=json.loads(json_util.dumps(i['_id']))["$oid"]
             temp['Time'] = i['time'].strftime('%H:%M:%S')
             temp['Count'] = i['count']
+            if('latitude' in i and 'longitude' in i):
+                temp['latitude'] = i['latitude']
+                temp['longitude'] = i['longitude']
+
             # temp['Image'] = image_base64 = base64.b64encode(i['image']).decode('utf-8')
             return_array.append(temp)
     

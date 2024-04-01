@@ -10,7 +10,7 @@ const MapScreen = () => {
 
   useEffect(()=>{
 
-    axios('http://10.0.2.2:5000/fetch_map')
+    axios('http://10.0.2.2:8000/fetch_map')
     .then((response)=>{
       console.log(response.data)
       setLocation(response.data)

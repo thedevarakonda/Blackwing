@@ -7,7 +7,7 @@ const AnalyticsScreen = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    axios('http://10.0.2.2:5000/fetch_data')
+    axios('http://10.0.2.2:8000/fetch_data')
       .then((response) => {
         console.log(response.data);
         setData(response.data);

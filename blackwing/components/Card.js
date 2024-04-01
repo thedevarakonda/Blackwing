@@ -22,7 +22,6 @@ const Card = ({Drone}) => {
   }, [])
 
   const handleImageClick = (imageUri) => {
-    // setSelectedImage(imageUri);
     setModalVisible(true);
   };
   
@@ -45,7 +44,8 @@ const Card = ({Drone}) => {
         <Text style={styles.imageText}>
           Time: {Drone['Time']} {'\n'}
           Count: {Drone['Count']}{'\n'}
-          Location: Location 1
+          Latitude : {Drone['latitude']!=null?Drone['latitude'] :"-"}{'\n'}
+          Longitude : {Drone['longitude']!=null?Drone['longitude'] :"-"}
         </Text>
       </View>
     </TouchableOpacity>
