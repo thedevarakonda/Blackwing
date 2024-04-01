@@ -1,13 +1,15 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify,Response,send_file
 import pymongo
 from datetime import datetime
-import json
-import base64
 from flask import request
-from bson import json_util, ObjectId
-
+import re
+import base64
+import io
+import json
+from PIL import Image
 
 app = Flask(__name__)
+# CORS(app, resources={r'/*': {'origins': '*'}})
 
 CONNECTION_STRING = "mongodb+srv://m_nikhil_n:Nikhil@miniproject-2.chfsax2.mongodb.net/?retryWrites=true&w=majority"
 client = pymongo.MongoClient(CONNECTION_STRING)
@@ -33,35 +35,60 @@ def fetch_data():
 
     return jsonify(result)
 
-@app.route('/fetch_image', methods=['POST'])
-def fetch_image():
-    
-    date_object = datetime.strptime(request.json['date'], '%Y-%m-%d').date()
-    print(date_object.year)
-       
-    
-    data = collection.find()
-    return_array =[]
-    for i in data:
-        temp = {}
-        time = i['time']
-        if(time.year == date_object.year and time.month == date_object.month and time.day == date_object.day):
-            temp['id']=json.loads(json_util.dumps(i['_id']))["$oid"]
-            temp['Time'] = i['time'].strftime('%H:%M:%S')
-            temp['Count'] = i['count']
-            # temp['Image'] = image_base64 = base64.b64encode(i['image']).decode('utf-8')
-            return_array.append(temp)
-    
-    return jsonify(return_array)
-            
+@app.route('/fetch_images',methods=['GET'])
+def fetch_images():
+    date = request.args.get('date')
+    print("Date is:", date)
 
-@app.route('/fetch_imageonly', methods=['POST'])
-def fetch_imageonly():       
-    data = collection.find({"_id":ObjectId(request.json['id'])})
-    image_base64 = None
-    for i in data:
-        image_base64 = base64.b64encode(i['image']).decode('utf-8')
-    return jsonify({'image': image_base64})
+    data = collection.find()
+
+    images = []
+
+    for entry in data:
+        if 'latitude' in entry:
+            time = entry['time']
+            detected_date = datetime(time.year, time.month, time.day).strftime('%Y-%m-%d')
+
+            if(date == detected_date):
+                image_bytes = entry['image']
+                image_base64 = base64.b64encode(image_bytes).decode('utf-8')
+                # print(type(image))
+                location = f"Lat: {entry['latitude']}, Long: {entry['longitude']}"
+
+                image_data = {
+                    'time': time.time().strftime('%H:%M:%S'),
+                    'count': entry['count'],
+                    'location' : location,
+                    # 'image': image_base64
+                }
+                images.append(image_data)
+                # break
+
+    return jsonify(images)
+
+@app.route('/images', methods=['GET'])
+def get_images():
+    data = collection.find()
+    images = []
+    for entry in data:
+        image_bytes = entry['image']
+        filename = 'image_from_mongodb.jpg'
+        with open(filename, 'wb') as f:
+            f.write(image_bytes)
+
+@app.route('/fetch_map',methods=['GET'])
+def get_maps():
+    data = collection.find()
+    maps = []
+    for entry in data:
+        if 'latitude' in entry:
+            time = entry['time']
+            date = datetime(time.year, time.month, time.day).strftime('%Y-%m-%d')
+            # print(entry['longitude  '])
+            maps.append({'date':date,'latitude':entry['latitude'],'longitude':entry['longitude']})
+
+    return jsonify(maps)
+
 
 @app.route('/')
 def data():

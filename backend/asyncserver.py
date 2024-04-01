@@ -55,6 +55,22 @@ async def fetch_data():
 
     return result
 
+
+@app.route('/fetch_map',methods=['GET'])
+def get_maps():
+    data = collection.find()
+    maps = []
+    for entry in data:
+        if 'latitude' in entry:
+            time = entry['time']
+            date = datetime(time.year, time.month, time.day).strftime('%Y-%m-%d')
+            # print(entry['longitude  '])
+            maps.append({'date':date,'latitude':entry['latitude'],'longitude':entry['longitude']})
+
+    return maps
+
+
+
 @app.post('/fetch_image')
 async def fetch_image(data : Datecls):
     

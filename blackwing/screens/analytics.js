@@ -1,30 +1,71 @@
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-// import {BarChart} from 'react-native-gifted-charts';
-
+import { BarChart } from 'react-native-chart-kit';
+import { Dimensions } from 'react-native';
 const AnalyticsScreen = () => {
-  const [count, setCount] = useState([
-    { label: new Date(2024, 2, 20).toLocaleDateString(), value: 15 },
-    { label: new Date(2024, 2, 21).toLocaleDateString(), value: 20 },
-    { label: new Date(2024, 2, 22).toLocaleDateString(), value: 25 },
-    { label: new Date(2024, 2, 23).toLocaleDateString(), value: 25 },
-    { label: new Date(2024, 2, 24).toLocaleDateString(), value: 20 },
-    { label: new Date(2024, 2, 25).toLocaleDateString(), value: 25 },
-    { label: new Date(2024, 2, 26).toLocaleDateString(), value: 25 },
-  ]);
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    axios('http://10.0.2.2:5000/fetch_data')
+      .then((response) => {
+        console.log(response.data);
+        setData(response.data);
+      })
+      .catch((error) => {
+        console.log("Error:", error);
+      });
+  }, []);
+
+  // Extracting labels and data for the chart
+  const labels = data.map((item) => {
+    // Formatting date to dd-mm format
+    const date = new Date(item.date);
+    return `${date.getDate()}/${date.getMonth() + 1}`;
+  });
+  const chartData = data.map((item) => item.count);
 
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        {/* <BarChart 
-          data={count}
-          barWidth={30}
-          noOfSections={5}
-          barBorderRadius={6}
-          frontColor="#FF9800"
-          yAxisThickness={5}
-          xAxisThickness={5}
-        /> */}
+        {data.length > 0 ? (
+          <View style={styles.chartContainer}>
+          <BarChart
+            data={{
+              labels: labels,
+              datasets: [{ data: chartData }],
+            }}
+            width={Dimensions.get("window").width}
+            height={250}
+            yAxisSuffix=" "
+            yAxisInterval={1}
+            chartConfig={{
+              backgroundGradientFrom: "#ffffff",
+              backgroundGradientTo: "#ffffff",
+              decimalPlaces: 0,
+              color: (opacity = 5) => `rgba(0, 0, 0, ${opacity})`,
+              labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+              style: {
+                borderRadius: 10,
+              },
+              propsForDots: {
+                r: "6",
+                strokeWidth: "2",
+                stroke: "#ffa726",
+              },
+              barPercentage: 1,
+              categoryPercentage: 1,
+            }}
+            style={styles.chart}
+            fromZero = 'true'
+            withInnerLines = 'false'  
+          />
+          <Text style={styles.xAxisLabel}>Date</Text>
+          <Text style={styles.yAxisLabel}>Count</Text>
+          </View>
+        ) : (
+          <Text>No data available</Text>
+        )}
       </View>
     </View>
   );
@@ -33,14 +74,34 @@ const AnalyticsScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
   content: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
-
+  chart: {
+    marginVertical: 8,
+    borderRadius: 16,
+  },
+  chartContainer: {
+    position: "relative",
+  },
+  xAxisLabel: {
+    position: "absolute",
+    bottom: 10,
+    left: Dimensions.get("window").width / 2 - 20,
+    fontSize: 17,
+    fontWeight: 'bold',
+  },
+  yAxisLabel: {
+    position: "absolute",
+    left: 1,
+    fontSize: 17,
+    transform: [{ rotate: "-90deg" }],
+    fontWeight: 'bold',
+  },
 });
 
 export default AnalyticsScreen;
