@@ -5,19 +5,25 @@ import { format } from 'date-fns';
 import { useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import axios from 'axios';
-import { useEffect } from 'react';
+import { useEffect } from 'react'
 
 const Stack = createNativeStackNavigator();
+
+const Home = () =>{
+  return(
+    <Stack.Navigator>
+      <Stack.Screen name="Feed" component={HomeScreen} options={{headerTitle:'Home'}} />
+      <Stack.Screen name="Images" component={ImagesScreen} />
+    </Stack.Navigator>
+  )
+}
+
 
 const HomeScreen = () => {
 
   const navigation = useNavigation();
 
-  const [data, setData] = useState([
-    { date: '2024-03-20', count: 10 },
-    { date: '2024-03-21', count: 15 },
-    { date: '2024-03-22', count: 20 },
-  ]);
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     
@@ -25,7 +31,7 @@ const HomeScreen = () => {
     .then((response) => {
       console.log(response.data)
       setData(response.data)})
-      .catch((error) => {console.log(error)});
+      .catch((error) => {console.log("Error:",error)});
   },[])
   
 
@@ -33,6 +39,7 @@ const HomeScreen = () => {
     console.log('Item clicked:', item);
     navigation.navigate('Images', { selectedDate: item.date });
   };
+
 
   const renderItem = ({ item }) => (
     <TouchableOpacity onPress={() => handleItemClick(item)} style={styles.item}>
@@ -46,12 +53,14 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
+
       <FlatList
         data={data}
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}
         contentContainerStyle={styles.content}
       />
+
     </View>
   );
 };
@@ -91,16 +100,20 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#000',
   },
+  filterButton: {
+    alignSelf: 'flex-start',
+    padding: 10,
+    backgroundColor: 'black',
+    borderRadius: 5,
+    marginBottom: 10,
+  },
+  filterButtonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold'
+  },
 });
 
 
-const Home = () =>{
-  return(
-    <Stack.Navigator>
-      <Stack.Screen name="Feed" component={HomeScreen} options={{headerTitle:'Home'}} />
-      <Stack.Screen name="Images" component={ImagesScreen} />
-    </Stack.Navigator>
-  )
-}
 
 export default Home;
