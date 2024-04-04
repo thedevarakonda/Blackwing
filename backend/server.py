@@ -1,7 +1,6 @@
 from flask import Flask, jsonify,Response,send_file
 import pymongo
 from datetime import datetime
-from flask_cors import CORS
 from flask import request
 import re
 import base64

@@ -5,7 +5,9 @@ import { format } from 'date-fns';
 import { useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import axios from 'axios';
-import { useEffect } from 'react'
+import { useEffect } from 'react';
+import { ActivityIndicator } from 'react-native'
+import api from '../config';
 
 const Stack = createNativeStackNavigator();
 
@@ -23,15 +25,18 @@ const HomeScreen = () => {
 
   const navigation = useNavigation();
 
+  const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
 
   useEffect(() => {
     
-    axios('http://10.0.2.2:5000/fetch_data')
+    axios(`${api}/fetch_data`)
     .then((response) => {
-      console.log(response.data)
-      setData(response.data)})
-      .catch((error) => {console.log("Error:",error)});
+      console.log(response.data);
+      setData(response.data)
+      setLoading(false)
+    })
+      .catch((error) => {console.log(error)});
   },[])
   
 
@@ -50,7 +55,14 @@ const HomeScreen = () => {
       </View>
     </TouchableOpacity>
   );
-
+  
+  if(loading)
+  {
+    return <View style={styles.loadcontainer}>
+      <ActivityIndicator size={"large"}/>
+      <Text>Loading</Text>
+    </View>
+  }
   return (
     <View style={styles.container}>
 
@@ -71,6 +83,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     paddingHorizontal: 20,
     paddingTop: 20,
+  },
+  loadcontainer: {
+    flex: 1,
+    backgroundColor: '#fff',
+    paddingHorizontal: 20,
+    paddingTop: 20,
+    justifyContent:'center',
+    alignItems:'center',
   },
   content: {
     flexGrow: 1,
