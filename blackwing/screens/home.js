@@ -29,7 +29,7 @@ const HomeScreen = () => {
 
   useEffect(() => {
     
-    axios('http://10.0.2.2:8000/fetch_data')
+    axios('https://fastapi-blackwing-5.onrender.com/fetch_data')
     .then((response) => {
       console.log(response.data);
       setData(response.data)

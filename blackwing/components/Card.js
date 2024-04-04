@@ -14,7 +14,7 @@ const Card = ({Drone}) => {
 
   useEffect(() => {
     
-    axios.post("http://10.0.2.2:8000/fetch_imageonly",{
+    axios.post("https://fastapi-blackwing-5.onrender.com/fetch_imageonly",{
       "id":Drone['id']
     }, responseType='arraybuffer')
     .then(response => {setimaget(response.data['image'])})

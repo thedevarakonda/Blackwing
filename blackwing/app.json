@@ -18,15 +18,20 @@
       "supportsTablet": true
     },
     "android": {
-      
       "usesCleartextTraffic": true,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.m_nikhil_n.blackwing"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "a19e63d3-eb8c-4ee4-963a-03db1ecc6362"
+      }
     }
   }
 }

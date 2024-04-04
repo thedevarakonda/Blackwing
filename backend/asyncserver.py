@@ -56,7 +56,7 @@ async def fetch_data():
     return result
 
 
-@app.route('/fetch_map',methods=['GET'])
+@app.get('/fetch_map')
 def get_maps():
     data = collection.find()
     maps = []

@@ -14,7 +14,7 @@ const ImagesScreen = ({ route }) => {
   useEffect(() => {
 
     console.log(selectedDate);
-    fetch('http://10.0.2.2:8000/fetch_image', {
+    fetch('https://fastapi-blackwing-5.onrender.com/fetch_image', {
 
       method: "POST",
 
@@ -55,9 +55,7 @@ const ImagesScreen = ({ route }) => {
       <ScrollView contentContainerStyle={styles.scrollView}>
         {response_data.map((i) => {
           return (
-            <>
-              <Card Drone={i}/>
-            </>
+              <Card key={i['id']} Drone={i}/>
           )
         })}
       </ScrollView>

@@ -13,6 +13,7 @@ const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const MainScreen = () => {
+  try{
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -48,6 +49,13 @@ const MainScreen = () => {
       <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
   );
+  }
+  catch (e) {
+  
+    console.log(e);
+
+  }
+
 };
 
 const App = () => {

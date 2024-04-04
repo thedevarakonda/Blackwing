@@ -3,12 +3,16 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { BarChart } from 'react-native-chart-kit';
 import { Dimensions } from 'react-native';
+import { ActivityIndicator } from 'react-native';
+
 const AnalyticsScreen = () => {
   const [data, setData] = useState([]);
+  const [Loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios('http://10.0.2.2:8000/fetch_data')
+    axios('https://fastapi-blackwing-5.onrender.com/fetch_data')
       .then((response) => {
+        setLoading(false);
         console.log(response.data);
         setData(response.data);
       })
@@ -24,6 +28,13 @@ const AnalyticsScreen = () => {
     return `${date.getDate()}/${date.getMonth() + 1}`;
   });
   const chartData = data.map((item) => item.count);
+  if(Loading)
+  {
+    return <View style={styles.loadcontainer}>
+      <ActivityIndicator size={"large"}/>
+      <Text>Loading</Text>
+    </View>
+  }
 
   return (
     <View style={styles.container}>
@@ -75,6 +86,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
+  },
+  loadcontainer: {
+    flex: 1,
+    backgroundColor: '#fff',
+    paddingHorizontal: 20,
+    paddingTop: 20,
+    justifyContent:'center',
+    alignItems:'center',
   },
   content: {
     flex: 1,

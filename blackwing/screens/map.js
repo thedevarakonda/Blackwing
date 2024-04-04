@@ -10,7 +10,7 @@ const MapScreen = () => {
 
   useEffect(()=>{
 
-    axios('http://10.0.2.2:8000/fetch_map')
+    axios('https://fastapi-blackwing-5.onrender.com/fetch_map')
     .then((response)=>{
       console.log(response.data)
       setLocation(response.data)
