@@ -57,7 +57,7 @@ async def fetch_data():
 
 
 @app.get('/fetch_map')
-def get_maps():
+async def get_maps():
     data = collection.find()
     maps = []
     for entry in data:
