@@ -3,16 +3,18 @@ import { View, StyleSheet, TouchableOpacity, Text, Alert } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import axios from 'axios';
+import api from '../config';
+
 const MapScreen = () => {
   const [showDate, setShowDate] = useState(false);
   const [date, setDate] = useState(new Date());
   const [location, setLocation] = useState([]);
-
   useEffect(()=>{
 
-    axios('https://fastapi-blackwing-5.onrender.com/fetch_map')
+    axios(`${api}/fetch_map`)
     .then((response)=>{
       console.log(response.data)
+      console.log("Request Sent")
       setLocation(response.data)
     })
     .catch((error)=>{

@@ -7,6 +7,7 @@ import axios from 'axios'
 import { Modal } from 'react-native'
 import { TouchableWithoutFeedback } from 'react-native'
 import { ActivityIndicator } from 'react-native'
+import api from '../config'
 
 const Card = ({Drone}) => {
   const [imaget, setimaget] = useState(null);
@@ -14,7 +15,7 @@ const Card = ({Drone}) => {
 
   useEffect(() => {
     
-    axios.post("https://fastapi-blackwing-5.onrender.com/fetch_imageonly",{
+    axios.post(`${api}/fetch_imageonly`,{
       "id":Drone['id']
     }, responseType='arraybuffer')
     .then(response => {setimaget(response.data['image'])})

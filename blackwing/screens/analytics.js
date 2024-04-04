@@ -4,13 +4,14 @@ import { View, Text, StyleSheet } from 'react-native';
 import { BarChart } from 'react-native-chart-kit';
 import { Dimensions } from 'react-native';
 import { ActivityIndicator } from 'react-native';
+import api from '../config';
 
 const AnalyticsScreen = () => {
   const [data, setData] = useState([]);
   const [Loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios('https://fastapi-blackwing-5.onrender.com/fetch_data')
+    axios(`${api}/fetch_data`)
       .then((response) => {
         setLoading(false);
         console.log(response.data);

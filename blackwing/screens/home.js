@@ -7,6 +7,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import axios from 'axios';
 import { useEffect } from 'react';
 import { ActivityIndicator } from 'react-native'
+import api from '../config';
 
 const Stack = createNativeStackNavigator();
 
@@ -29,7 +30,7 @@ const HomeScreen = () => {
 
   useEffect(() => {
     
-    axios('https://fastapi-blackwing-5.onrender.com/fetch_data')
+    axios(`${api}/fetch_data`)
     .then((response) => {
       console.log(response.data);
       setData(response.data)

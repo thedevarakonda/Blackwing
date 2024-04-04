@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity, Modal, TouchableWithoutFeedback } from 'react-native';
 import Card from '../components/Card';
 import { ActivityIndicator } from 'react-native';
+import api from '../config';
 
 const ImagesScreen = ({ route }) => {
   const { selectedDate } = route.params;
@@ -14,7 +15,7 @@ const ImagesScreen = ({ route }) => {
   useEffect(() => {
 
     console.log(selectedDate);
-    fetch('https://fastapi-blackwing-5.onrender.com/fetch_image', {
+    fetch(`${api}/fetch_image`, {
 
       method: "POST",
 
